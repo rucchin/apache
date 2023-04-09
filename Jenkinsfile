@@ -2,18 +2,18 @@ pipeline
 {
 
 agent {
-  label 'DevServer'
+  label 'any'
 }
 
 parameters {
-    choice choices: ['dev', 'prod'], name: 'select_environment'
+    choice choices: ['any''dev', 'prod'], name: 'select_environment'
 }
 
 environment{
-    NAME = "piyush"
+    NAME = "ruchin"
 }
 tools {
-  maven 'mymaven'
+  maven 'maven'
 }
 
 stages{
@@ -38,7 +38,7 @@ stages{
         parallel {
             stage('testA')
             {
-                agent { label 'DevServer' }
+                agent { label 'any' }
                 steps{
                     echo " This is test A"
                     sh "mvn test"
@@ -47,7 +47,7 @@ stages{
             }
             stage('testB')
             {
-                agent { label 'DevServer' }
+                agent { label 'any' }
                 steps{
                 echo "this is test B"
                 sh "mvn test"
@@ -67,9 +67,9 @@ stages{
 
     stage('deploy_dev')
     {
-        when { expression {params.select_environment == 'dev'}
+        when { expression {params.select_environment == 'any'}
         beforeAgent true}
-        agent { label 'DevServer' }
+        agent { label 'any' }
         steps
         {
             dir("/var/www/html")
@@ -85,9 +85,9 @@ stages{
 
     stage('deploy_prod')
     {
-      when { expression {params.select_environment == 'prod'}
+      when { expression {params.select_environment == 'any'}
         beforeAgent true}
-        agent { label 'ProdServer' }
+        agent { label 'any' }
         steps
         {
              timeout(time:5, unit:'DAYS'){
