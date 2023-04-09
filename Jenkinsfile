@@ -6,7 +6,7 @@ agent {
 }
 
 parameters {
-    choice choices: ['any''dev', 'prod'], name: 'select_environment'
+    choice choices: ['any', 'dev', 'prod'], name: 'select_environment'
 }
 
 environment{
